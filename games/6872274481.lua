@@ -7400,7 +7400,7 @@ run(function()
 	local NameToId = {}
 	
 	BedBreakEffect = vape.Legit:CreateModule({
-		Name = 'Bed Break Effect',
+		Name = 'BedBreakEffect',
 		Function = function(callback)
 			if callback then
 	            BedBreakEffect:Clean(vapeEvents.BedwarsBedBreak.Event:Connect(function(data)
@@ -7430,7 +7430,7 @@ end)
 	
 run(function()
 	vape.Legit:CreateModule({
-		Name = 'Clean Kit',
+		Name = 'CleanKit',
 		Function = function(callback)
 			if callback then
 				bedwars.WindWalkerController.spawnOrb = function() end
@@ -7494,7 +7494,7 @@ run(function()
 	local oldvalues, oldfont = {}
 	
 	DamageIndicator = vape.Legit:CreateModule({
-		Name = 'Damage Indicator',
+		Name = 'DamageIndicator',
 		Function = function(callback)
 			if callback then
 				oldvalues = table.clone(tab)
@@ -7616,7 +7616,7 @@ run(function()
 	local effects, util = {}, {}
 	
 	FPSBoost = vape.Legit:CreateModule({
-		Name = 'FPS Boost',
+		Name = 'FPSBoost',
 		Function = function(callback)
 			if callback then
 				if Kill.Enabled then
@@ -7693,7 +7693,7 @@ run(function()
 	local done = {}
 	
 	HitColor = vape.Legit:CreateModule({
-		Name = 'Hit Color',
+		Name = 'HitColor',
 		Function = function(callback)
 			if callback then 
 				repeat
@@ -7727,7 +7727,7 @@ end)
 	
 run(function()
 	vape.Legit:CreateModule({
-		Name = 'Hit Fix',
+		Name = 'HitFix',
 		Function = function(callback)
 			debug.setconstant(bedwars.SwordController.swingSwordAtMouse, 23, callback and 'raycast' or 'Raycast')
 			debug.setupvalue(bedwars.SwordController.swingSwordAtMouse, 4, callback and bedwars.QueryUtil or workspace)
@@ -7933,7 +7933,7 @@ run(function()
 	}
 	
 	KillEffect = vape.Legit:CreateModule({
-		Name = 'Kill Effect',
+		Name = 'KillEffect',
 		Function = function(callback)
 			if callback then
 				for i, v in killeffects do
@@ -8164,7 +8164,7 @@ run(function()
 	local old
 	
 	SoundChanger = vape.Legit:CreateModule({
-		Name = 'Sound Changer',
+		Name = 'SoundChanger',
 		Function = function(callback)
 			if callback then
 				old = bedwars.SoundManager.playSound
@@ -8361,7 +8361,7 @@ run(function()
 	local old, oldc1
 	
 	Viewmodel = vape.Legit:CreateModule({
-		Name = 'View model',
+		Name = 'Viewmodel',
 		Function = function(callback)
 			local viewmodel = gameCamera:FindFirstChild('Viewmodel')
 			if callback then
@@ -8462,7 +8462,7 @@ run(function()
 	local NameToId = {}
 	
 	WinEffect = vape.Legit:CreateModule({
-		Name = 'Win Effect',
+		Name = 'WinEffect',
 		Function = function(callback)
 			if callback then
 				WinEffect:Clean(vapeEvents.MatchEndEvent.Event:Connect(function()
@@ -8490,7 +8490,42 @@ run(function()
 		List = WinEffectName
 	})
 end)
-	
+
+run(function()
+    local damageboost = nil
+    local damageboostduration = nil
+    local damageboostmultiplier = nil
+    damageboost = vape.Categories.Blatant:CreateModule({
+        Name = 'Damage Boost',
+        Tooltip = 'Makes you go faster whenever you take knockback.',
+        Function = function(callback)
+            if callback then
+                damageboost:Clean(vapeEvents.EntityDamageEvent.Event:Connect(function(damageTable)
+                    local player = damageTable.entityInstance and playersService:GetPlayerFromCharacter(damageTable.entityInstance)
+                    if player and player == lplr and (damageTable.knockbackMultiplier and damageTable.knockbackMultiplier.horizontal and damageTable.knockbackMultiplier.horizontal > 0 or playersService:GetPlayerFromCharacter(damageTable.fromEntity) ~= nil) and not vape.Modules['Long Jump'].Enabled then
+                        damagedata.Multi = damageboostmultiplier.Value --+ (damageTable.knockbackMultiplier.horizontal / 2)
+                        damagedata.lastHit = tick() + damageboostduration.Value
+                    end
+                end))
+            end
+        end
+    })
+    damageboostduration = damageboost:CreateSlider({
+        Name = 'Duration',
+        Min = 0,
+        Max = 2,
+        Decimal = 20,
+        Default = 0.4,
+    })
+    damageboostmultiplier = damageboost:CreateSlider({
+        Name = 'Multiplier',
+        Min = 0,
+        Max = 2,
+        Decimal = 20,
+        Default = 1.4,
+    })
+end)
+																																																																																																																																																									
 --[[run(function()
 	local function isGoingTo(id) --> only works on multi instances btw
 		if not shared.CatAutoFarm then return false end
