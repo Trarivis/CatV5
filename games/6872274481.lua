@@ -1774,7 +1774,7 @@ run(function()
 	local Time
 	
 	FastBreak = vape.Categories.Blatant:CreateModule({
-		Name = 'FastBreak',
+		Name = 'Fast Break',
 		Function = function(callback)
 			if callback then
 				repeat
@@ -1969,7 +1969,7 @@ run(function()
 	end
 	
 	HitBoxes = vape.Categories.Blatant:CreateModule({
-		Name = 'HitBoxes',
+		Name = 'Hit Boxes',
 		Function = function(callback)
 			if callback then
 				if Mode.Value == 'Sword' then
@@ -2036,7 +2036,7 @@ end)
 	
 run(function()
 	vape.Categories.Blatant:CreateModule({
-		Name = 'KeepSprint',
+		Name = 'Keep Sprint',
 		Function = function(callback)
 			debug.setconstant(bedwars.SprintController.startSprinting, 5, callback and 'blockSprinting' or 'blockSprint')
 			bedwars.SprintController:stopSprinting()
@@ -2680,7 +2680,7 @@ run(function()
 	LongJumpMethods.pirate_gunpowder_barrel = LongJumpMethods.tnt
 	
 	LongJump = vape.Categories.Blatant:CreateModule({
-		Name = 'LongJump',
+		Name = 'Long Jump',
 		Function = function(callback)
 			frictionTable.LongJump = callback or nil
 			updateVelocity()
@@ -2783,7 +2783,7 @@ run(function()
 	end)
 	
 	NoFall = vape.Categories.Blatant:CreateModule({
-		Name = 'NoFall',
+		Name = 'No Fall',
 		Function = function(callback)
 			if callback then
 				local tracked = 0
@@ -2861,7 +2861,7 @@ run(function()
 	local old
 	
 	vape.Categories.Blatant:CreateModule({
-		Name = 'NoSlowdown',
+		Name = 'No Slowdown',
 		Function = function(callback)
 			local modifier = bedwars.SprintController:getMovementStatusModifier()
 			if callback then
@@ -2898,7 +2898,7 @@ run(function()
 	local old
 	
 	local ProjectileAimbot = vape.Categories.Blatant:CreateModule({
-		Name = 'ProjectileAimbot',
+		Name = 'Projectile Aimbot',
 		Function = function(callback)
 			if callback then
 				old = bedwars.ProjectileController.calculateImportantLaunchValues
@@ -3028,7 +3028,7 @@ run(function()
 	end
 	
 	ProjectileAura = vape.Categories.Blatant:CreateModule({
-		Name = 'ProjectileAura',
+		Name = 'Projectile Aura',
 		Function = function(callback)
 			if callback then
 				repeat
@@ -3221,7 +3221,7 @@ run(function()
 	end
 	
 	BedESP = vape.Categories.Render:CreateModule({
-		Name = 'BedESP',
+		Name = 'Bed ESP',
 		Function = function(callback)
 			if callback then
 				BedESP:Clean(collectionService:GetInstanceAddedSignal('bed'):Connect(function(bed)
@@ -3334,7 +3334,7 @@ run(function()
 	end
 	
 	KitESP = vape.Categories.Render:CreateModule({
-		Name = 'KitESP',
+		Name = 'Kit ESP',
 		Function = function(callback)
 			if callback then
 				repeat task.wait() until store.equippedKit ~= '' or (not KitESP.Enabled)
@@ -3632,7 +3632,7 @@ run(function()
 	}
 	
 	NameTags = vape.Categories.Render:CreateModule({
-		Name = 'NameTags',
+		Name = 'Name Tags',
 		Function = function(callback)
 			if callback then
 				methodused = DrawingToggle.Enabled and 'Drawing' or 'Normal'
@@ -3895,7 +3895,7 @@ run(function()
 	end
 	
 	StorageESP = vape.Categories.Render:CreateModule({
-		Name = 'StorageESP',
+		Name = 'Storage ESP',
 		Function = function(callback)
 			if callback then
 				StorageESP:Clean(collectionService:GetInstanceAddedSignal('chest'):Connect(Added))
@@ -3946,7 +3946,7 @@ run(function()
 	local AutoBalloon
 	
 	AutoBalloon = vape.Categories.Utility:CreateModule({
-		Name = 'AutoBalloon',
+		Name = 'Auto Balloon',
 		Function = function(callback)
 			if callback then
 				repeat task.wait() until store.matchState ~= 0 or (not AutoBalloon.Enabled)
@@ -4330,7 +4330,7 @@ run(function()
 	}
 	
 	AutoKit = vape.Categories.Utility:CreateModule({
-		Name = 'AutoKit',
+		Name = 'Auto Kit',
 		Function = function(callback)
 			if callback then
 				repeat task.wait() until store.equippedKit ~= '' and store.matchState ~= 0 or (not AutoKit.Enabled)
@@ -4383,7 +4383,7 @@ run(function()
 	end
 	
 	AutoPearl = vape.Categories.Utility:CreateModule({
-		Name = 'AutoPearl',
+		Name = 'Auto Pearl',
 		Function = function(callback)
 			if callback then
 				local check
@@ -4439,8 +4439,8 @@ run(function()
 		end
 	end
 	
-	AutoPlay = vape.Categories.Utility:CreateModule({
-		Name = 'AutoPlay',
+	AutoQueue = vape.Categories.Utility:CreateModule({
+		Name = 'Auto Queue',
 		Function = function(callback)
 			if callback then
 				AutoPlay:Clean(vapeEvents.EntityDeathEvent.Event:Connect(function(deathTable)
@@ -4471,7 +4471,7 @@ run(function()
 	end
 	
 	vape.Categories.Utility:CreateModule({
-		Name = 'AutoShoot',
+		Name = 'Auto Shoot',
 		Function = function(callback)
 			if callback then
 				old = bedwars.ProjectileController.createLocalProjectile
@@ -4533,7 +4533,7 @@ run(function()
 	end
 	
 	AutoToxic = vape.Categories.Utility:CreateModule({
-		Name = 'AutoToxic',
+		Name = 'Auto Toxic',
 		Function = function(callback)
 			if callback then
 				AutoToxic:Clean(vapeEvents.BedwarsBedBreak.Event:Connect(function(bedTable)
@@ -4605,7 +4605,7 @@ run(function()
 	local OwlCheck
 	
 	AutoVoidDrop = vape.Categories.Utility:CreateModule({
-		Name = 'AutoVoidDrop',
+		Name = 'Auto Void Drop',
 		Function = function(callback)
 			if callback then
 				repeat task.wait() until store.matchState ~= 0 or (not AutoVoidDrop.Enabled)
@@ -4658,7 +4658,7 @@ run(function()
 	local MissileTP
 	
 	MissileTP = vape.Categories.Utility:CreateModule({
-		Name = 'MissileTP',
+		Name = 'Missile TP',
 		Function = function(callback)
 			if callback then
 				MissileTP:Toggle()
@@ -4702,7 +4702,7 @@ run(function()
 	local Lower
 	
 	PickupRange = vape.Categories.Utility:CreateModule({
-		Name = 'PickupRange',
+		Name = 'Pick up Range',
 		Function = function(callback)
 			if callback then
 				local items = collection('ItemDrop', PickupRange)
@@ -4762,7 +4762,7 @@ run(function()
 	local RavenTP
 	
 	RavenTP = vape.Categories.Utility:CreateModule({
-		Name = 'RavenTP',
+		Name = 'Raven TP',
 		Function = function(callback)
 			if callback then
 				RavenTP:Toggle()
@@ -4979,7 +4979,7 @@ run(function()
 	local tiered, nexttier = {}, {}
 	
 	ShopTierBypass = vape.Categories.Utility:CreateModule({
-		Name = 'ShopTierBypass',
+		Name = 'Shop Tier Bypass',
 		Function = function(callback)
 			if callback then
 				repeat task.wait() until store.shopLoaded or not ShopTierBypass.Enabled
@@ -5180,14 +5180,14 @@ end)
 	
 run(function()
 	TrapDisabler = vape.Categories.Utility:CreateModule({
-		Name = 'TrapDisabler',
+		Name = 'Trap Disabler',
 		Tooltip = 'Disables Snap Traps'
 	})
 end)
 	
 run(function()
 	vape.Categories.World:CreateModule({
-		Name = 'Anti-AFK',
+		Name = 'Anti AFK',
 		Function = function(callback)
 			if callback then
 				for _, v in getconnections(lplr.Idled) do
@@ -5219,7 +5219,7 @@ run(function()
 	end
 	
 	AutoSuffocate = vape.Categories.World:CreateModule({
-		Name = 'AutoSuffocate',
+		Name = 'Auto Suffocate',
 		Function = function(callback)
 			if callback then
 				repeat
@@ -5303,7 +5303,7 @@ run(function()
 	end
 	
 	AutoTool = vape.Categories.World:CreateModule({
-		Name = 'AutoTool',
+		Name = 'Auto Tool',
 		Function = function(callback)
 			if callback then
 				event = Instance.new('BindableEvent')
@@ -5366,7 +5366,7 @@ run(function()
 	end
 	
 	BedProtector = vape.Categories.World:CreateModule({
-		Name = 'BedProtector',
+		Name = 'Bed Protector',
 		Function = function(callback)
 			if callback then
 				local bed = getBedNear()
@@ -5421,7 +5421,7 @@ run(function()
 	end
 	
 	ChestSteal = vape.Categories.World:CreateModule({
-		Name = 'ChestSteal',
+		Name = 'Chest Stealer',
 		Function = function(callback)
 			if callback then
 				local chests = collection('chest', ChestSteal)
@@ -5704,7 +5704,7 @@ run(function()
 	local Range
 	
 	ArmorSwitch = vape.Categories.Inventory:CreateModule({
-		Name = 'ArmorSwitch',
+		Name = 'Armor Switch',
 		Function = function(callback)
 			if callback then
 				if Mode.Value == 'Toggle' then
@@ -5838,7 +5838,7 @@ run(function()
 	end
 	
 	AutoBank = vape.Categories.Inventory:CreateModule({
-		Name = 'AutoBank',
+		Name = 'Auto Bank',
 		Function = function(callback)
 			if callback then
 				Chests = collection('personal-chest', AutoBank)
@@ -6045,7 +6045,7 @@ run(function()
 	end
 	
 	AutoBuy = vape.Categories.Inventory:CreateModule({
-		Name = 'AutoBuy',
+		Name = 'Auto Buy',
 		Function = function(callback)
 			if callback then
 				repeat task.wait() until store.queueType ~= 'bedwars_test'
@@ -6271,7 +6271,7 @@ run(function()
 	end
 	
 	AutoConsume = vape.Categories.Inventory:CreateModule({
-		Name = 'AutoConsume',
+		Name = 'Auto Consume',
 		Function = function(callback)
 			if callback then
 				AutoConsume:Clean(vapeEvents.InventoryAmountChanged.Event:Connect(consumeCheck))
@@ -6859,7 +6859,7 @@ run(function()
 	end
 	
 	AutoHotbar = vape.Categories.Inventory:CreateModule({
-		Name = 'AutoHotbar',
+		Name = 'Auto Hotbar',
 		Function = function(callback)
 			if callback then
 				task.spawn(sortCallback)
@@ -6892,7 +6892,7 @@ run(function()
 	local oldclickhold, oldshowprogress
 	
 	local FastConsume = vape.Categories.Inventory:CreateModule({
-		Name = 'FastConsume',
+		Name = 'Fast Consume',
 		Function = function(callback)
 			if callback then
 				oldclickhold = bedwars.ClickHold.startClick
@@ -6963,7 +6963,7 @@ run(function()
 	local FastDrop
 	
 	FastDrop = vape.Categories.Inventory:CreateModule({
-		Name = 'FastDrop',
+		Name = 'Fast Drop',
 		Function = function(callback)
 			if callback then
 				repeat
@@ -7067,7 +7067,7 @@ run(function()
 	end
 	
 	BedPlates = vape.Categories.Minigames:CreateModule({
-		Name = 'BedPlates',
+		Name = 'Bed Plates',
 		Function = function(callback)
 			if callback then
 				for _, v in collectionService:GetTagged('bed') do 
@@ -7727,7 +7727,7 @@ end)
 	
 run(function()
 	vape.Legit:CreateModule({
-		Name = 'HitFix',
+		Name = 'Hit Fix',
 		Function = function(callback)
 			debug.setconstant(bedwars.SwordController.swingSwordAtMouse, 23, callback and 'raycast' or 'Raycast')
 			debug.setupvalue(bedwars.SwordController.swingSwordAtMouse, 4, callback and bedwars.QueryUtil or workspace)
@@ -8164,7 +8164,7 @@ run(function()
 	local old
 	
 	SoundChanger = vape.Legit:CreateModule({
-		Name = 'SoundChanger',
+		Name = 'Sound Changer',
 		Function = function(callback)
 			if callback then
 				old = bedwars.SoundManager.playSound
@@ -8361,7 +8361,7 @@ run(function()
 	local old, oldc1
 	
 	Viewmodel = vape.Legit:CreateModule({
-		Name = 'Viewmodel',
+		Name = 'View model',
 		Function = function(callback)
 			local viewmodel = gameCamera:FindFirstChild('Viewmodel')
 			if callback then
@@ -8462,7 +8462,7 @@ run(function()
 	local NameToId = {}
 	
 	WinEffect = vape.Legit:CreateModule({
-		Name = 'WinEffect',
+		Name = 'Win Effect',
 		Function = function(callback)
 			if callback then
 				WinEffect:Clean(vapeEvents.MatchEndEvent.Event:Connect(function()
@@ -8491,3 +8491,25 @@ run(function()
 	})
 end)
 	
+--[[run(function()
+	local function isGoingTo(id) --> only works on multi instances btw
+		if not shared.CatAutoFarm then return false end
+		for i,v in listfiles('newcatvape/communication') do
+			local user = v:gsub('newcatvape/communication', ''):gsub('.txt', '')
+			if user ~= lplr.Name and tonumber(readfile(v)) == tonumber(id) then
+				return true
+			end
+		end
+	end
+
+	AutoWin = vape.Categories.Utility:CreateModule({
+		Name = 'Auto Win',
+		Function = function(callback)
+			if callback then
+				notif('AutoWin', 'Doesn\'t work rn', 10)																												
+				AutoWin:Toggle()
+			end
+		end,
+		Tooltip = 'Automatically wins the game for you'
+	})
+end)]]
