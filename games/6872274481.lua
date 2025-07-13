@@ -8025,8 +8025,8 @@ run(function()
         Decimal = 20,
         Default = 1.4,
     })
-end)
-																															
+end)																															
+    
 run(function()
     local Players = game:GetService("Players")
     local RunService = game:GetService("RunService")
@@ -8039,11 +8039,8 @@ run(function()
         local hrp = character:WaitForChild("HumanoidRootPart")
 
         if onEnable then
-            hrp.Transparency = 0.3
             hrp.Color = Color3.new(1, 1, 1)
             hrp.Material = Enum.Material.Plastic
-        else
-            hrp.Transparency = 1
         end
 
         hrp.CanCollide = true
@@ -8053,11 +8050,7 @@ run(function()
     local function setCharacterVisibility(isVisible)
         local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
         for _, part in ipairs(character:GetDescendants()) do
-            if part:IsA("BasePart") and part.Name ~= "HumanoidRootPart" then
-                part.LocalTransparencyModifier = isVisible and 0 or 1
-            elseif part:IsA("Decal") then
-                part.Transparency = isVisible and 0 or 1
-            elseif part:IsA("LayerCollector") then
+            if part:IsA("LayerCollector") then
                 part.Enabled = isVisible
             end
         end
@@ -8075,18 +8068,12 @@ run(function()
         loopConn = RunService.Heartbeat:Connect(function()
             if not invisibilityEnabled or not Character or not Humanoid or not RootPart then return end
 
-            -- Force character invisible every frame
             for _, part in ipairs(Character:GetDescendants()) do
-                if part:IsA("BasePart") and part.Name ~= "HumanoidRootPart" then
-                    part.LocalTransparencyModifier = 1
-                elseif part:IsA("Decal") then
-                    part.Transparency = 1
-                elseif part:IsA("LayerCollector") then
+                if part:IsA("LayerCollector") then
                     part.Enabled = false
                 end
             end
 
-            -- Position/animation spoof
             local oldcf = RootPart.CFrame
             local oldcamoffset = Humanoid.CameraOffset
             local newcf = RootPart.CFrame - Vector3.new(0, Humanoid.HipHeight + (RootPart.Size.Y / 2) - 1, 0)
@@ -8117,7 +8104,7 @@ run(function()
             local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 
             if callback then
-                vape:CreateNotification('Invisibility Enabled', 'You are now invisible.', 4)
+                vape:CreateNotification('Invisibility', 'You are now invisible.', 4)
                 modifyHRP(true)
                 setCharacterVisibility(false)
                 startLoop(character)
@@ -8141,7 +8128,7 @@ run(function()
         end
     end)
 end)
-																																																																																																																																																									
+																																																																																																																																																	
 run(function()
     local InfiniteJump
     local Velocity
