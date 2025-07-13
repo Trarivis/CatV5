@@ -3944,7 +3944,7 @@ run(function()
 		Name = 'Auto Queue',
 		Function = function(callback)
 			if callback then
-				AutoPlay:Clean(vapeEvents.EntityDeathEvent.Event:Connect(function(deathTable)
+				AutoQueue:Clean(vapeEvents.EntityDeathEvent.Event:Connect(function(deathTable)
 					if deathTable.finalKill and deathTable.entityInstance == lplr.Character and isEveryoneDead() and store.matchState ~= 2 then
 						joinQueue()
 					end
