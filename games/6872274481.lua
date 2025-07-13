@@ -4453,7 +4453,7 @@ run(function()
 		end,
 		Tooltip = 'Automatically queues after the match ends.'
 	})
-	Random = AutoPlay:CreateToggle({
+	Random = AutoQueue:CreateToggle({
 		Name = 'Random',
 		Tooltip = 'Chooses a random mode'
 	})
