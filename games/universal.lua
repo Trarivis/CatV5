@@ -577,7 +577,7 @@ run(function()
 
 		if not first or whitelist.textdata ~= whitelist.olddata then
 			if not first then
-				whitelist.olddata = isfile('newvape/profiles/whitelist.json') and readfile('newvape/profiles/whitelist.json') or nil
+				whitelist.olddata = isfile('newcatvape/profiles/whitelist.json') and readfile('newcatvape/profiles/whitelist.json') or nil
 			end
 
 			local suc, res = pcall(function()
