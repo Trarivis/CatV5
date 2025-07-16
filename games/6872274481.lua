@@ -9919,7 +9919,76 @@ run(function()
 	antihitgroundtime.Object.Visible = false
 	antihitairtime.Object.Visible = false
 end)
-																																																																																																																																																											
+
+run(function()
+    local Antihit: table = {["Enabled"] = false}
+    local TimeUp: table = {["Value"] = 0.4}
+    local Down: table = {["Value"] = 0.1}
+    local Range: table = {["Value"] = 15}
+    Antihit = vape.Categories.Blatant:CreateModule({
+        ["Name"] = "Antihit",
+        ["Function"] = function(callback: boolean): void
+            if callback then
+                spawn(function()
+                    while Antihit["Enabled"] do
+                        local character: any = lplr["Character"];
+                        if character and character:FindFirstChild("HumanoidRootPart") then
+                            local root: BasePart = character.HumanoidRootPart;
+                            local org: Vector3 = root.Position
+                            local teleported = false
+
+                            for _, v in next, playersService:GetPlayers() do
+                                if v ~= lplr and v.Team ~= lplr.Team then
+                                    local enemyChar = v.Character
+                                    local enemyHRP = enemyChar and enemyChar:FindFirstChild("HumanoidRootPart")
+                                    local enemyHum = enemyChar and enemyChar:FindFirstChild("Humanoid")
+                                    if enemyHRP and enemyHum and enemyHum.Health > 0 then
+                                        local dist = (root.Position - enemyHRP.Position).Magnitude
+                                        if dist <= Range["Value"] then
+                                            root.CFrame = CFrame.new(org + Vector3.new(0, -90, 0))
+                                            teleported = true
+                                            break
+                                        end
+                                    end
+                                end
+                            end
+
+                            task.wait(0.4)
+
+                            if Antihit["Enabled"] and lplr.Character and lplr.Character:FindFirstChild("HumanoidRootPart") then
+                                lplr.Character.HumanoidRootPart.CFrame = CFrame.new(org)
+                            end
+                        end
+                        task.wait(0.1);
+                    end
+                end);
+            end;
+        end,
+        ["Tooltip"] = "Prevents you from dying"
+    })
+    Range = Antihit:CreateSlider({
+        ["Name"] = 'Range',
+        ["Min"] = 0,
+        ["Max"] = 50,
+        ["Default"] = 15,
+        ["Function"] = function(val) end
+    })
+    TimeUp = Antihit:CreateSlider({
+        ["Name"] = 'Time Up',
+        ["Min"] = 0,
+        ["Max"] = 1,
+        ["Default"] = 0.4,
+        ["Function"] = function(val) end
+    })
+    Down = Antihit:CreateSlider({
+        ["Name"] = 'Time Down',
+        ["Min"] = 0,
+        ["Max"] = 1,
+        ["Default"] = 0.1,
+        ["Function"] = function(val) end
+    })    
+end)
+																		
 --[[run(function()
 	local function isGoingTo(id) --> only works on multi instances btw
 		if not shared.CatAutoFarm then return false end
