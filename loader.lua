@@ -11,7 +11,7 @@ end
 local function downloadFile(path, func)
 	if not isfile(path) then
 		local suc, res = pcall(function()
-			return game:HttpGet('https://raw.githubusercontent.com/Trarivis/CatV5/'..readfile('newvape/profiles/commit.txt')..'/'..select(1, path:gsub('newvape/', '')), true)
+			return game:HttpGet('https://raw.githubusercontent.com/Trarivis/CatV5/'..readfile('newcatvape/profiles/commit.txt')..'/'..select(1, path:gsub('newvape/', '')), true)
 		end)
 		if not suc or res == '404: Not Found' then
 			error(res)
@@ -34,7 +34,7 @@ local function wipeFolder(path)
 	end
 end
 
-for _, folder in {'CatVape', 'CatVape/games', 'CatVape/profiles', 'CatVape/assets', 'CatVape/libraries', 'CatVape/guis'} do
+for _, folder in {'newcatvape', 'newcatvape/games', 'newcatvape/profiles', 'newcatvape/assets', 'newcatvape/libraries', 'newcatvape/guis'} do
 	if not isfolder(folder) then
 		makefolder(folder)
 	end
@@ -47,13 +47,13 @@ if not shared.VapeDeveloper then
 	local commit = subbed:find('currentOid')
 	commit = commit and subbed:sub(commit + 13, commit + 52) or nil
 	commit = commit and #commit == 40 and commit or 'main'
-	if commit == 'main' or (isfile('CatVape/profiles/commit.txt') and readfile('CatVape/profiles/commit.txt') or '') ~= commit then
-		wipeFolder('CatVape')
-		wipeFolder('CatVape/games')
-		wipeFolder('CatVape/guis')
-		wipeFolder('CatVape/libraries')
+	if commit == 'main' or (isfile('newcatvape/profiles/commit.txt') and readfile('newcatvape/profiles/commit.txt') or '') ~= commit then
+		wipeFolder('newcatvape')
+		wipeFolder('newcatvape/games')
+		wipeFolder('newcatvape/guis')
+		wipeFolder('newcatvape/libraries')
 	end
-	writefile('CatVape/profiles/commit.txt', commit)
+	writefile('newcatvape/profiles/commit.txt', commit)
 end
 
-return loadstring(downloadFile('CatVape/main.lua'), 'main')()
+return loadstring(downloadFile('newcatvape/main.lua'), 'main')()
