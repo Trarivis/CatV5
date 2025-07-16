@@ -34,7 +34,7 @@ local function wipeFolder(path)
 	end
 end
 
-for _, folder in {'newvape', 'newvape/games', 'newvape/profiles', 'newvape/assets', 'newvape/libraries', 'newvape/guis'} do
+for _, folder in {'CatVape', 'CatVape/games', 'CatVape/profiles', 'CatVape/assets', 'CatVape/libraries', 'CatVape/guis'} do
 	if not isfolder(folder) then
 		makefolder(folder)
 	end
@@ -47,13 +47,13 @@ if not shared.VapeDeveloper then
 	local commit = subbed:find('currentOid')
 	commit = commit and subbed:sub(commit + 13, commit + 52) or nil
 	commit = commit and #commit == 40 and commit or 'main'
-	if commit == 'main' or (isfile('newvape/profiles/commit.txt') and readfile('newvape/profiles/commit.txt') or '') ~= commit then
-		wipeFolder('newvape')
-		wipeFolder('newvape/games')
-		wipeFolder('newvape/guis')
-		wipeFolder('newvape/libraries')
+	if commit == 'main' or (isfile('CatVape/profiles/commit.txt') and readfile('CatVape/profiles/commit.txt') or '') ~= commit then
+		wipeFolder('CatVape')
+		wipeFolder('CatVape/games')
+		wipeFolder('CatVape/guis')
+		wipeFolder('CatVape/libraries')
 	end
-	writefile('newvape/profiles/commit.txt', commit)
+	writefile('CatVape/profiles/commit.txt', commit)
 end
 
-return loadstring(downloadFile('newvape/main.lua'), 'main')()
+return loadstring(downloadFile('CatVape/main.lua'), 'main')()
