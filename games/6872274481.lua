@@ -19853,64 +19853,68 @@ run(function()
             if callback then
                 spawn(function()
                     while Antihit["Enabled"] do
-                        local character: any = lplr["Character"];
-                        if character and character:FindFirstChild("HumanoidRootPart") then
-                            local root: BasePart = character.HumanoidRootPart;
-                            local org: Vector3 = root.Position
-                            local teleported = false
+                        local character: any = lplr.Character
+                        local root: BasePart = character and character:FindFirstChild("HumanoidRootPart")
+                        if root then
+                            local orgPos: Vector3 = root.Position
+                            local foundEnemy = false
 
                             for _, v in next, playersService:GetPlayers() do
                                 if v ~= lplr and v.Team ~= lplr.Team then
                                     local enemyChar = v.Character
-                                    local enemyHRP = enemyChar and enemyChar:FindFirstChild("HumanoidRootPart")
+                                    local enemyRoot = enemyChar and enemyChar:FindFirstChild("HumanoidRootPart")
                                     local enemyHum = enemyChar and enemyChar:FindFirstChild("Humanoid")
-                                    if enemyHRP and enemyHum and enemyHum.Health > 0 then
-                                        local dist = (root.Position - enemyHRP.Position).Magnitude
+                                    if enemyRoot and enemyHum and enemyHum.Health > 0 then
+                                        local dist = (root.Position - enemyRoot.Position).Magnitude
                                         if dist <= Range["Value"] then
-                                            root.CFrame = CFrame.new(org + Vector3.new(0, -90, 0))
-                                            teleported = true
+                                            foundEnemy = true
                                             break
                                         end
                                     end
                                 end
                             end
 
-                            task.wait(0.4)
-
-                            if Antihit["Enabled"] and lplr.Character and lplr.Character:FindFirstChild("HumanoidRootPart") then
-                                lplr.Character.HumanoidRootPart.CFrame = CFrame.new(org)
+                            if foundEnemy then
+                                root.CFrame = CFrame.new(orgPos + Vector3.new(0, -90, 0))
+                                task.wait(TimeUp["Value"])
+                                if Antihit["Enabled"] and lplr.Character and lplr.Character:FindFirstChild("HumanoidRootPart") then
+                                    lplr.Character.HumanoidRootPart.CFrame = CFrame.new(orgPos)
+                                end
                             end
                         end
-                        task.wait(0.1);
+                        task.wait(Down["Value"])
                     end
-                end);
-            end;
+                end)
+            end
         end,
         ["Tooltip"] = "Prevents you from dying"
     })
+
     Range = Antihit:CreateSlider({
         ["Name"] = 'Range',
         ["Min"] = 0,
         ["Max"] = 50,
         ["Default"] = 15,
-        ["Function"] = function(val) end
+        ["Function"] = function(val) Range["Value"] = val end
     })
+
     TimeUp = Antihit:CreateSlider({
         ["Name"] = 'Time Up',
         ["Min"] = 0,
         ["Max"] = 1,
         ["Default"] = 0.4,
-        ["Function"] = function(val) end
+        ["Function"] = function(val) TimeUp["Value"] = val end
     })
+
     Down = Antihit:CreateSlider({
         ["Name"] = 'Time Down',
         ["Min"] = 0,
         ["Max"] = 1,
         ["Default"] = 0.1,
-        ["Function"] = function(val) end
+        ["Function"] = function(val) Down["Value"] = val end
     })    
 end)
-																		
+
 --[[run(function()
 	local function isGoingTo(id) --> only works on multi instances btw
 		if not shared.CatAutoFarm then return false end
