@@ -5133,7 +5133,7 @@ run(function()
 	end
 	
 	StaffDetector = vape.Categories.Utility:CreateModule({
-		Name = 'StaffDetector',
+		Name = 'Staff Detector',
 		Function = function(callback)
 			if callback then
 				StaffDetector:Clean(playersService.PlayerAdded:Connect(playerAdded))
@@ -5424,7 +5424,7 @@ run(function()
 	end
 	
 	ChestSteal = vape.Categories.World:CreateModule({
-		Name = 'Chest Stealer',
+		Name = 'Chest Steal',
 		Function = function(callback)
 			if callback then
 				local chests = collection('chest', ChestSteal)
