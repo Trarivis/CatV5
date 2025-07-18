@@ -1210,7 +1210,7 @@ run(function()
 	local ClickAim
 	
 	AimAssist = vape.Categories.Combat:CreateModule({
-		Name = 'Aim Assist',
+		Name = 'AimAssist',
 		Function = function(callback)
 			if callback then
 				AimAssist:Clean(runService.Heartbeat:Connect(function(dt)
@@ -1287,7 +1287,7 @@ run(function()
 	local old
 	
 	AutoCharge = vape.Categories.Combat:CreateModule({
-	    Name = 'Auto Charge',
+	    Name = 'AutoCharge',
 	    Function = function(callback)
 	        debug.setconstant(bedwars.SwordController.attackEntity, 58, callback and 'damage' or 'multiHitCheckDurationSec')
 	        if callback then
@@ -1371,7 +1371,7 @@ run(function()
 	end
 	
 	AutoClicker = vape.Categories.Combat:CreateModule({
-		Name = 'Auto Clicker',
+		Name = 'AutoClicker',
 		Function = function(callback)
 			if callback then
 				AutoClicker:Clean(inputService.InputBegan:Connect(function(input)
@@ -1437,7 +1437,7 @@ run(function()
 	local old
 	
 	vape.Categories.Combat:CreateModule({
-		Name = 'No Click Delay',
+		Name = 'NoClickDelay',
 		Function = function(callback)
 			if callback then
 				old = bedwars.SwordController.isClickingTooFast
@@ -1524,7 +1524,7 @@ run(function()
 	local rayParams = RaycastParams.new()
 	
 	TriggerBot = vape.Categories.Combat:CreateModule({
-		Name = 'Trigger Bot',
+		Name = 'TriggerBot',
 		Function = function(callback)
 			if callback then
 				repeat
@@ -1651,7 +1651,7 @@ run(function()
 	end
 
 	AntiFall = vape.Categories.Blatant:CreateModule({
-		Name = 'Anti Fall',
+		Name = 'AntiFall',
 		Function = function(callback)
 			if callback then
 				repeat task.wait() until store.matchState ~= 0 or (not AntiFall.Enabled)
@@ -3635,7 +3635,7 @@ run(function()
 	}
 	
 	NameTags = vape.Categories.Render:CreateModule({
-		Name = 'Name Tags',
+		Name = 'NameTags',
 		Function = function(callback)
 			if callback then
 				methodused = DrawingToggle.Enabled and 'Drawing' or 'Normal'
@@ -5133,7 +5133,7 @@ run(function()
 	end
 	
 	StaffDetector = vape.Categories.Utility:CreateModule({
-		Name = 'Staff Detector',
+		Name = 'StaffDetector',
 		Function = function(callback)
 			if callback then
 				StaffDetector:Clean(playersService.PlayerAdded:Connect(playerAdded))
