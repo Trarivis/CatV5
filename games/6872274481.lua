@@ -1210,7 +1210,7 @@ run(function()
 	local ClickAim
 	
 	AimAssist = vape.Categories.Combat:CreateModule({
-		Name = 'AimAssist',
+		Name = 'Aim Assist',
 		Function = function(callback)
 			if callback then
 				AimAssist:Clean(runService.Heartbeat:Connect(function(dt)
@@ -1287,7 +1287,7 @@ run(function()
 	local old
 	
 	AutoCharge = vape.Categories.Combat:CreateModule({
-	    Name = 'AutoCharge',
+	    Name = 'Auto Charge',
 	    Function = function(callback)
 	        debug.setconstant(bedwars.SwordController.attackEntity, 58, callback and 'damage' or 'multiHitCheckDurationSec')
 	        if callback then
@@ -1371,7 +1371,7 @@ run(function()
 	end
 	
 	AutoClicker = vape.Categories.Combat:CreateModule({
-		Name = 'AutoClicker',
+		Name = 'Auto Clicker',
 		Function = function(callback)
 			if callback then
 				AutoClicker:Clean(inputService.InputBegan:Connect(function(input)
@@ -1437,7 +1437,7 @@ run(function()
 	local old
 	
 	vape.Categories.Combat:CreateModule({
-		Name = 'NoClickDelay',
+		Name = 'No Click Delay',
 		Function = function(callback)
 			if callback then
 				old = bedwars.SwordController.isClickingTooFast
@@ -1524,7 +1524,7 @@ run(function()
 	local rayParams = RaycastParams.new()
 	
 	TriggerBot = vape.Categories.Combat:CreateModule({
-		Name = 'TriggerBot',
+		Name = 'Trigger Bot',
 		Function = function(callback)
 			if callback then
 				repeat
@@ -1651,7 +1651,7 @@ run(function()
 	end
 
 	AntiFall = vape.Categories.Blatant:CreateModule({
-		Name = 'AntiFall',
+		Name = 'Anti Fall',
 		Function = function(callback)
 			if callback then
 				repeat task.wait() until store.matchState ~= 0 or (not AntiFall.Enabled)
