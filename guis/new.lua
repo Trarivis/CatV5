@@ -314,7 +314,7 @@ local function downloadFile(path, func)
 	if not isfile(path) then
 		createDownloader(path)
 		local suc, res = pcall(function()
-			return game:HttpGet('https://raw.githubusercontent.com/Trarivis/CatV5/'..readfile('newcatvape/profiles/commit.txt')..'/'..select(1, path:gsub('newcatvape/', '')), true)
+			return game:HttpGet('https://raw.githubusercontent.com/Trarivis/CatV5/'..readfile('newvape/profiles/commit.txt')..'/'..select(1, path:gsub('newvape/', '')), true)
 		end)
 		if not suc or res == '404: Not Found' then
 			error(res)
@@ -407,7 +407,7 @@ local function removeTags(str)
 end
 
 do
-	local res = isfile('newcatvape/profiles/color.txt') and loadJson('newcatvape/profiles/color.txt')
+	local res = isfile('newvape/profiles/color.txt') and loadJson('newvape/profiles/color.txt')
 	if res then
 		uipallet.Main = res.Main and Color3.fromRGB(unpack(res.Main)) or uipallet.Main
 		uipallet.Text = res.Text and Color3.fromRGB(unpack(res.Text)) or uipallet.Text
