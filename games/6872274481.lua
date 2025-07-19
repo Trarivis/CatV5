@@ -18413,66 +18413,69 @@ run(function()
 		List = WinEffectName
 	})
 end)
-
+																						
 run(function()
-    local damageboost = nil
-    local damageboostduration = nil
-    local damageboostmultiplier = nil
-    local speedEnd = 0
-    local connection
+	local damageboost = nil
+	local damageboostduration = nil
+	local damageboostmultiplier = nil
+	local speedEnd = 0
+	local damageMultiplier = 0
+	local connection
 
-    damageboost = vape.Categories.Blatant:CreateModule({
-        Name = "Damage Boost",
-        Tooltip = "Gives you a speed burst when hit by knockback.",
-        Function = function(callback)
-            if callback then
-                damageboost:Clean(vapeEvents.EntityDamageEvent.Event:Connect(function(damageTable)
-                    local char = lplr.Character
-                    local hrp = char and char:FindFirstChild("HumanoidRootPart")
-                    local hum = char and char:FindFirstChildOfClass("Humanoid")
-                    local attacker = damageTable.fromEntity
-                    local isKnockback = damageTable.knockbackMultiplier and damageTable.knockbackMultiplier.horizontal and damageTable.knockbackMultiplier.horizontal > 0
-                    if hrp and hum and (isKnockback or playersService:GetPlayerFromCharacter(attacker)) and not vape.Modules["Long Jump"].Enabled then
-                        speedEnd = tick() + damageboostduration.Value
-                    end
-                end))
+	damageboost = vape.Categories.Blatant:CreateModule({
+		Name = "Damage Boost",
+		Tooltip = "Gives you a burst of speed when you take knockback.",
+		Function = function(callback)
+			if callback then
+				damageboost:Clean(vapeEvents.EntityDamageEvent.Event:Connect(function(damageTable)
+					local player = damageTable.entityInstance and playersService:GetPlayerFromCharacter(damageTable.entityInstance)
+					local attacker = playersService:GetPlayerFromCharacter(damageTable.fromEntity)
+					local knockback = damageTable.knockbackMultiplier and damageTable.knockbackMultiplier.horizontal
+					if player == lplr and (knockback and knockback > 0 or attacker ~= nil) and not vape.Modules["Long Jump"].Enabled then
+						speedEnd = tick() + damageboostduration.Value
+						damageMultiplier = damageboostmultiplier.Value
+					end
+				end))
 
-                connection = game:GetService("RunService").RenderStepped:Connect(function()
-                    if not damageboost.Enabled then return end
-                    local char = lplr.Character
-                    local hrp = char and char:FindFirstChild("HumanoidRootPart")
-                    if hrp and tick() < speedEnd then
-                        local lv = hrp.CFrame.lookVector * damageboostmultiplier.Value * 25
-                        hrp.Velocity = Vector3.new(lv.X, hrp.Velocity.Y, lv.Z)
-                    end
-                end)
-            else
-                if connection then
-                    connection:Disconnect()
-                    connection = nil
-                end
-                speedEnd = 0
-            end
-        end
-    })
+				connection = game:GetService("RunService").RenderStepped:Connect(function()
+					if not damageboost.Enabled then return end
+					if tick() < speedEnd then
+						local char = lplr.Character
+						local hrp = char and char:FindFirstChild("HumanoidRootPart")
+						if hrp then
+							local direction = hrp.CFrame.lookVector * damageMultiplier * 25
+							hrp.Velocity = Vector3.new(direction.X, hrp.Velocity.Y, direction.Z)
+						end
+					end
+				end)
+			else
+				speedEnd = 0
+				damageMultiplier = 0
+				if connection then
+					connection:Disconnect()
+					connection = nil
+				end
+			end
+		end
+	})
 
-    damageboostduration = damageboost:CreateSlider({
-        Name = "Duration",
-        Min = 0,
-        Max = 2,
-        Decimal = 20,
-        Default = 0.4
-    })
+	damageboostduration = damageboost:CreateSlider({
+		Name = "Duration",
+		Min = 0,
+		Max = 2,
+		Decimal = 20,
+		Default = 0.4
+	})
 
-    damageboostmultiplier = damageboost:CreateSlider({
-        Name = "Multiplier",
-        Min = 0,
-        Max = 2,
-        Decimal = 20,
-        Default = 1.4
-    })
-end)																								
-    
+	damageboostmultiplier = damageboost:CreateSlider({
+		Name = "Multiplier",
+		Min = 0,
+		Max = 2,
+		Decimal = 20,
+		Default = 1.4
+	})
+end)
+																																																																																																																																																																																																																																																																																																																						
 run(function()
     local Players = game:GetService("Players")
     local RunService = game:GetService("RunService")
