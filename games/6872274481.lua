@@ -18420,40 +18420,61 @@ run(function()
 	local damageboostmultiplier = nil
 	local speedEnd = 0
 	local damageMultiplier = 0
+	local reenableSpeedTime = 0
+	local speedWasEnabled = false
 	local connection
 
 	damageboost = vape.Categories.Blatant:CreateModule({
 		Name = "Damage Boost",
-		Tooltip = "Gives you a burst of speed when you take knockback and are moving.",
+		Tooltip = "Gives you a burst of speed when you take knockback and are moving. Temporarily disables Speed.",
 		Function = function(callback)
 			if callback then
 				damageboost:Clean(vapeEvents.EntityDamageEvent.Event:Connect(function(damageTable)
 					local player = damageTable.entityInstance and playersService:GetPlayerFromCharacter(damageTable.entityInstance)
 					local attacker = playersService:GetPlayerFromCharacter(damageTable.fromEntity)
 					local knockback = damageTable.knockbackMultiplier and damageTable.knockbackMultiplier.horizontal
+
 					if player == lplr and (knockback and knockback > 0 or attacker ~= nil) and not vape.Modules["Long Jump"].Enabled then
 						speedEnd = tick() + damageboostduration.Value
 						damageMultiplier = damageboostmultiplier.Value
+
+						local Speed = vape.Modules["Speed"]
+						if Speed and Speed.Enabled then
+							speedWasEnabled = true
+							Speed:Toggle()
+							reenableSpeedTime = speedEnd
+						else
+							speedWasEnabled = false
+						end
 					end
 				end))
 
 				connection = runService.PreSimulation:Connect(function()
-					if not damageboost.Enabled then return end
 					local char = lplr.Character
-					if tick() < speedEnd and char and char:FindFirstChild("HumanoidRootPart") and char:FindFirstChildWhichIsA("Humanoid") then
-						local hrp = char:FindFirstChild("HumanoidRootPart")
-						local hum = char:FindFirstChildWhichIsA("Humanoid")
-						if hum:GetState() ~= Enum.HumanoidStateType.Climbing and hum.MoveDirection.Magnitude > 0 then
-							local moveDir = hum.MoveDirection.Unit
-							local boost = moveDir * damageMultiplier * 25
-							local currentVelocity = hrp.AssemblyLinearVelocity
-							hrp.AssemblyLinearVelocity = Vector3.new(boost.X, currentVelocity.Y, boost.Z)
+					if not damageboost.Enabled or not char then return end
+
+					local hrp = char:FindFirstChild("HumanoidRootPart")
+					local hum = char:FindFirstChildWhichIsA("Humanoid")
+					if tick() < speedEnd and hrp and hum and hum.MoveDirection.Magnitude > 0 then
+						local moveDir = hum.MoveDirection.Unit
+						local boost = moveDir * damageMultiplier * 25
+						local currentVelocity = hrp.AssemblyLinearVelocity
+						hrp.AssemblyLinearVelocity = Vector3.new(boost.X, currentVelocity.Y, boost.Z)
+					end
+
+					if speedWasEnabled and tick() >= reenableSpeedTime then
+						local Speed = vape.Modules["Speed"]
+						if Speed and not Speed.Enabled then
+							Speed:Toggle()
 						end
+						speedWasEnabled = false
 					end
 				end)
 			else
 				speedEnd = 0
 				damageMultiplier = 0
+				speedWasEnabled = false
+				reenableSpeedTime = 0
 				if connection then
 					connection:Disconnect()
 					connection = nil
@@ -18478,7 +18499,7 @@ run(function()
 		Default = 1.4
 	})
 end)
-																																																																																																																																																																																																																																																																																																																						
+																																																																																																																		
 run(function()
     local Players = game:GetService("Players")
     local RunService = game:GetService("RunService")
