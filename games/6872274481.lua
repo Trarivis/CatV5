@@ -18424,7 +18424,7 @@ run(function()
 
 	damageboost = vape.Categories.Blatant:CreateModule({
 		Name = "Damage Boost",
-		Tooltip = "Gives you a burst of speed when you take knockback.",
+		Tooltip = "Gives you a burst of speed when you take knockback and are moving.",
 		Function = function(callback)
 			if callback then
 				damageboost:Clean(vapeEvents.EntityDamageEvent.Event:Connect(function(damageTable)
@@ -18437,14 +18437,18 @@ run(function()
 					end
 				end))
 
-				connection = game:GetService("RunService").RenderStepped:Connect(function()
+				connection = runService.PreSimulation:Connect(function()
 					if not damageboost.Enabled then return end
-					if tick() < speedEnd then
-						local char = lplr.Character
-						local hrp = char and char:FindFirstChild("HumanoidRootPart")
-						if hrp then
-							local direction = hrp.CFrame.lookVector * damageMultiplier * 25
-							hrp.Velocity = Vector3.new(direction.X, hrp.Velocity.Y, direction.Z)
+					if tick() < speedEnd and entitylib.isAlive and not Fly.Enabled and not LongJump.Enabled and isnetworkowner(entitylib.character.RootPart) then
+						local hrp = entitylib.character and entitylib.character:FindFirstChild("HumanoidRootPart")
+						local hum = entitylib.character:FindFirstChildWhichIsA("Humanoid")
+						if hrp and hum and hum:GetState() ~= Enum.HumanoidStateType.Climbing then
+							local moveDir = hum.MoveDirection
+							if moveDir.Magnitude > 0 then
+								local boost = moveDir.Unit * damageMultiplier * 25
+								local currentVelocity = hrp.AssemblyLinearVelocity
+								hrp.AssemblyLinearVelocity = Vector3.new(boost.X, currentVelocity.Y, boost.Z)
+							end
 						end
 					end
 				end)
