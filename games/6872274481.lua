@@ -18420,13 +18420,13 @@ run(function()
 	local damageboostmultiplier = nil
 	local speedEnd = 0
 	local damageMultiplier = 0
-	local reenableSpeedTime = 0
-	local speedWasEnabled = false
+	local reenableInvisTime = 0
+	local invisWasEnabled = false
 	local connection
 
 	damageboost = vape.Categories.Blatant:CreateModule({
 		Name = "Damage Boost",
-		Tooltip = "Gives you a burst of speed when you take knockback and are moving. Temporarily disables Speed.",
+		Tooltip = "Gives you a burst of speed when you take knockback and are moving. Temporarily overrides Speed and disables Invisibility.",
 		Function = function(callback)
 			if callback then
 				damageboost:Clean(vapeEvents.EntityDamageEvent.Event:Connect(function(damageTable)
@@ -18438,13 +18438,13 @@ run(function()
 						speedEnd = tick() + damageboostduration.Value
 						damageMultiplier = damageboostmultiplier.Value
 
-						local Speed = vape.Modules["Speed"]
-						if Speed and Speed.Enabled then
-							speedWasEnabled = true
-							Speed:Toggle()
-							reenableSpeedTime = speedEnd
+						local Invisibility = vape.Modules["Invisibility"]
+						if Invisibility and Invisibility.Enabled then
+							invisWasEnabled = true
+							Invisibility:Toggle()
+							reenableInvisTime = speedEnd
 						else
-							speedWasEnabled = false
+							invisWasEnabled = false
 						end
 					end
 				end))
@@ -18462,19 +18462,19 @@ run(function()
 						hrp.AssemblyLinearVelocity = Vector3.new(boost.X, currentVelocity.Y, boost.Z)
 					end
 
-					if speedWasEnabled and tick() >= reenableSpeedTime then
-						local Speed = vape.Modules["Speed"]
-						if Speed and not Speed.Enabled then
-							Speed:Toggle()
+					if invisWasEnabled and tick() >= reenableInvisTime then
+						local Invisibility = vape.Modules["Invisibility"]
+						if Invisibility and not Invisibility.Enabled then
+							Invisibility:Toggle()
 						end
-						speedWasEnabled = false
+						invisWasEnabled = false
 					end
 				end)
 			else
 				speedEnd = 0
 				damageMultiplier = 0
-				speedWasEnabled = false
-				reenableSpeedTime = 0
+				invisWasEnabled = false
+				reenableInvisTime = 0
 				if connection then
 					connection:Disconnect()
 					connection = nil
@@ -18499,7 +18499,7 @@ run(function()
 		Default = 1.4
 	})
 end)
-																																																																																																																		
+			
 run(function()
     local Players = game:GetService("Players")
     local RunService = game:GetService("RunService")
