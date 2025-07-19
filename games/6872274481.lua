@@ -3635,7 +3635,7 @@ run(function()
 	}
 	
 	NameTags = vape.Categories.Render:CreateModule({
-		Name = 'NameTags',
+		Name = 'Name Tags',
 		Function = function(callback)
 			if callback then
 				methodused = DrawingToggle.Enabled and 'Drawing' or 'Normal'
@@ -5424,7 +5424,7 @@ run(function()
 	end
 	
 	ChestSteal = vape.Categories.World:CreateModule({
-		Name = 'Chest Steal',
+		Name = 'Chest Stealer',
 		Function = function(callback)
 			if callback then
 				local chests = collection('chest', ChestSteal)
