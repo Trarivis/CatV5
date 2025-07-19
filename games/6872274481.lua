@@ -18449,7 +18449,7 @@ run(function()
         Decimal = 20,
         Default = 1.4,
     })
-end)																															
+end)																													
     
 run(function()
     local Players = game:GetService("Players")
