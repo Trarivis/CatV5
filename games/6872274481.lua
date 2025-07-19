@@ -18439,16 +18439,15 @@ run(function()
 
 				connection = runService.PreSimulation:Connect(function()
 					if not damageboost.Enabled then return end
-					if tick() < speedEnd and entitylib.isAlive and not Fly.Enabled and not LongJump.Enabled and isnetworkowner(entitylib.character.RootPart) then
-						local hrp = entitylib.character and entitylib.character:FindFirstChild("HumanoidRootPart")
-						local hum = entitylib.character:FindFirstChildWhichIsA("Humanoid")
-						if hrp and hum and hum:GetState() ~= Enum.HumanoidStateType.Climbing then
-							local moveDir = hum.MoveDirection
-							if moveDir.Magnitude > 0 then
-								local boost = moveDir.Unit * damageMultiplier * 25
-								local currentVelocity = hrp.AssemblyLinearVelocity
-								hrp.AssemblyLinearVelocity = Vector3.new(boost.X, currentVelocity.Y, boost.Z)
-							end
+					local char = lplr.Character
+					if tick() < speedEnd and char and char:FindFirstChild("HumanoidRootPart") and char:FindFirstChildWhichIsA("Humanoid") then
+						local hrp = char:FindFirstChild("HumanoidRootPart")
+						local hum = char:FindFirstChildWhichIsA("Humanoid")
+						if hum:GetState() ~= Enum.HumanoidStateType.Climbing and hum.MoveDirection.Magnitude > 0 then
+							local moveDir = hum.MoveDirection.Unit
+							local boost = moveDir * damageMultiplier * 25
+							local currentVelocity = hrp.AssemblyLinearVelocity
+							hrp.AssemblyLinearVelocity = Vector3.new(boost.X, currentVelocity.Y, boost.Z)
 						end
 					end
 				end)
