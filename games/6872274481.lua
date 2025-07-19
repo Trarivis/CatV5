@@ -18413,7 +18413,7 @@ run(function()
 		List = WinEffectName
 	})
 end)
-																										
+																																																																																																																																																																																																																																																																																																																																															
 run(function()
 	local damageboost = nil
 	local damageboostduration = nil
@@ -18439,13 +18439,17 @@ run(function()
 						if moveDirection and moveDirection.Magnitude > 0 then
 							speedEnd = tick() + damageboostduration.Value
 							damageMultiplier = damageboostmultiplier.Value
-							if vape.Modules["Speed"].Enabled and rawget(_G, "speedLogicEnabled") then
+							if vape.Modules["Speed"].Enabled then
 								speedWasEnabled = true
-								_G.speedLogicEnabled = false
+								vape.Modules["Speed"]:Toggle()
+							else
+								speedWasEnabled = false
 							end
-							if vape.Modules["Invisibility"].Enabled then
+							if vape.Modules["Invisibility"] and vape.Modules["Invisibility"].Enabled then
 								invisWasEnabled = true
 								vape.Modules["Invisibility"]:Toggle()
+							else
+								invisWasEnabled = false
 							end
 						end
 					end
@@ -18458,13 +18462,13 @@ run(function()
 						local hrp = char and char:FindFirstChild("HumanoidRootPart")
 						local hum = char and char:FindFirstChild("Humanoid")
 						if hrp and hum and hum.MoveDirection.Magnitude > 0 then
-							local direction = hrp.CFrame.LookVector * damageMultiplier * 25
+							local direction = hum.MoveDirection.Unit * damageMultiplier * 25
 							hrp.Velocity = Vector3.new(direction.X, hrp.Velocity.Y, direction.Z)
 						end
 					elseif not restoring then
 						restoring = true
 						if speedWasEnabled then
-							_G.speedLogicEnabled = true
+							vape.Modules["Speed"]:Toggle()
 							speedWasEnabled = false
 						end
 						if invisWasEnabled then
@@ -18482,7 +18486,7 @@ run(function()
 					connection = nil
 				end
 				if speedWasEnabled then
-					_G.speedLogicEnabled = true
+					vape.Modules["Speed"]:Toggle()
 					speedWasEnabled = false
 				end
 				if invisWasEnabled then
@@ -18509,7 +18513,7 @@ run(function()
 		Default = 1.4
 	})
 end)
-												
+																																																																																																																																																																																																																																																																																																																						
 run(function()
     local Players = game:GetService("Players")
     local RunService = game:GetService("RunService")
