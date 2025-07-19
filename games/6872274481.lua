@@ -18420,36 +18420,54 @@ run(function()
     local damageboost = nil
     local damageboostduration = nil
     local damageboostmultiplier = nil
+    local speedEnd = 0
+
     damageboost = vape.Categories.Blatant:CreateModule({
-        Name = 'Damage Boost',
-        Tooltip = 'Makes you go faster whenever you take knockback.',
+        Name = "Damage Boost",
+        Tooltip = "Gives you a speed burst when hit by knockback.",
         Function = function(callback)
             if callback then
                 damageboost:Clean(vapeEvents.EntityDamageEvent.Event:Connect(function(damageTable)
-                    local player = damageTable.entityInstance and playersService:GetPlayerFromCharacter(damageTable.entityInstance)
-                    if player and player == lplr and (damageTable.knockbackMultiplier and damageTable.knockbackMultiplier.horizontal and damageTable.knockbackMultiplier.horizontal > 0 or playersService:GetPlayerFromCharacter(damageTable.fromEntity) ~= nil) and not vape.Modules['Long Jump'].Enabled then
-                        damagedata.Multi = damageboostmultiplier.Value --+ (damageTable.knockbackMultiplier.horizontal / 2)
-                        damagedata.lastHit = tick() + damageboostduration.Value
+                    local char = lplr.Character
+                    local hrp = char and char:FindFirstChild("HumanoidRootPart")
+                    local hum = char and char:FindFirstChildOfClass("Humanoid")
+                    local attacker = damageTable.fromEntity
+                    local isKnockback = damageTable.knockbackMultiplier and damageTable.knockbackMultiplier.horizontal and damageTable.knockbackMultiplier.horizontal > 0
+                    if hrp and hum and (isKnockback or playersService:GetPlayerFromCharacter(attacker)) and not vape.Modules["Long Jump"].Enabled then
+                        speedEnd = tick() + damageboostduration.Value
                     end
                 end))
+                damageboost:Clean(runLoops:BindToHeartbeat("DamageBoost", function()
+                    local char = lplr.Character
+                    local hrp = char and char:FindFirstChild("HumanoidRootPart")
+                    if hrp and tick() < speedEnd then
+                        local lookVector = (hrp.CFrame.lookVector * damageboostmultiplier.Value)
+                        hrp.Velocity = Vector3.new(lookVector.X, hrp.Velocity.Y, lookVector.Z)
+                    end
+                end))
+            else
+                runLoops:UnbindFromHeartbeat("DamageBoost")
+                speedEnd = 0
             end
         end
     })
+
     damageboostduration = damageboost:CreateSlider({
-        Name = 'Duration',
+        Name = "Duration",
         Min = 0,
         Max = 2,
         Decimal = 20,
-        Default = 0.4,
+        Default = 0.4
     })
+
     damageboostmultiplier = damageboost:CreateSlider({
-        Name = 'Multiplier',
+        Name = "Multiplier",
         Min = 0,
         Max = 2,
         Decimal = 20,
-        Default = 1.4,
+        Default = 1.4
     })
-end)																													
+end)																											
     
 run(function()
     local Players = game:GetService("Players")
