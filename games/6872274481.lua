@@ -18421,6 +18421,7 @@ run(function()
     local damageboostduration = nil
     local damageboostmultiplier = nil
     local speedEnd = 0
+    local connection
 
     damageboost = vape.Categories.Blatant:CreateModule({
         Name = "Damage Boost",
@@ -18437,16 +18438,21 @@ run(function()
                         speedEnd = tick() + damageboostduration.Value
                     end
                 end))
-                damageboost:Clean(runLoops:BindToHeartbeat("DamageBoost", function()
+
+                connection = game:GetService("RunService").RenderStepped:Connect(function()
+                    if not damageboost.Enabled then return end
                     local char = lplr.Character
                     local hrp = char and char:FindFirstChild("HumanoidRootPart")
                     if hrp and tick() < speedEnd then
-                        local lookVector = (hrp.CFrame.lookVector * damageboostmultiplier.Value)
-                        hrp.Velocity = Vector3.new(lookVector.X, hrp.Velocity.Y, lookVector.Z)
+                        local lv = hrp.CFrame.lookVector * damageboostmultiplier.Value * 25
+                        hrp.Velocity = Vector3.new(lv.X, hrp.Velocity.Y, lv.Z)
                     end
-                end))
+                end)
             else
-                runLoops:UnbindFromHeartbeat("DamageBoost")
+                if connection then
+                    connection:Disconnect()
+                    connection = nil
+                end
                 speedEnd = 0
             end
         end
@@ -18467,7 +18473,7 @@ run(function()
         Decimal = 20,
         Default = 1.4
     })
-end)																											
+end)																								
     
 run(function()
     local Players = game:GetService("Players")
